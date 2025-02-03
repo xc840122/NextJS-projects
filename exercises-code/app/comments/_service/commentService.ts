@@ -21,6 +21,14 @@ export async function getCommentService(id: string) {
   }
 }
 
+export async function queryCommentsService(query: string) {
+
+  const filteredComments = query
+    ? comments.filter(c => c.text.includes(query))
+    : comments;
+  return filteredComments;
+}
+
 export async function updateCommentServie(id: string, text: Comment['text']) {
   if (!isNaN(+id)) {
     // find the comment
