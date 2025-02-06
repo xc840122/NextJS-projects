@@ -1,6 +1,6 @@
 import { getProducts } from "@/prisma-db";
 
-type Product = {
+export type Product = {
   id: number,
   name: string,
   price: number,
