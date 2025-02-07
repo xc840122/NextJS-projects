@@ -10,14 +10,14 @@ function AddProductPage() {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0.0);
+  const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch("/products-db/create-client/api", {
+      const response = await fetch("/products-db/api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, price, description }),
@@ -28,7 +28,10 @@ function AddProductPage() {
     } catch (error) {
       console.log("Error", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
+      setName("");
+      setDescription("");
+      setPrice(0);
     }
   }
 
@@ -42,6 +45,7 @@ function AddProductPage() {
             className="block border-blue-500 w-full h-10 shadow-sm rounded-lg"
             type="text"
             onChange={(e) => setName(e.target.value)}
+            name="name"
             required
           />
         </div>
@@ -51,6 +55,7 @@ function AddProductPage() {
             className="block border-blue-500 w-full h-10 shadow-sm rounded-lg"
             type="text"
             onChange={(e) => setPrice(parseFloat(e.target.value))}
+            name="price"
             required
           />
         </div>
@@ -59,6 +64,7 @@ function AddProductPage() {
           <textarea
             className="block border-blue-500 w-full h-10 shadow-sm rounded-lg"
             onChange={(e) => setDescription(e.target.value)}
+            name="description"
             required
           />
         </div>
