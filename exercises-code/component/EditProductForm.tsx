@@ -1,6 +1,5 @@
 'use client'
 import { useActionState } from "react";
-import Button from "./Button";
 import { Product } from "@/app/products-db/page";
 import { editProduct } from "@/app/products-db/actions/editProduct";
 
@@ -12,7 +11,9 @@ export default function EditProductForm(
     product: Product
   }) {
 
-  const [state, formAction] = useActionState(editProduct, {
+  // append id
+  const editProductwithId = editProduct.bind(null, product.id)
+  const [state, formAction, pending] = useActionState(editProductwithId, {
     error: {}
   });
 
@@ -23,7 +24,8 @@ export default function EditProductForm(
         autoComplete="off"
         action={formAction}
         className="border bg-slate-100 w-2/3 space-y-4 p-2 rounded-sm">
-        <input type="hidden" name="id" value={product.id} />
+        {/* not secure, expose id */}
+        {/* <input type="hidden" name="id" value={product.id} />*/}
         <div>
           <label>Name</label>
           <input
@@ -60,7 +62,14 @@ export default function EditProductForm(
           )}
         </div>
         <div>
-          <Button />
+          <button
+            className={`block mx-auto ${pending ? "bg-gray-200" : "bg-blue-500"}
+       text-white font-semibold rounded-lg shadow-sm p-2 w-full`}
+            type="submit"
+            disabled={pending}
+          >
+            {pending ? "Editting..." : "Edit Product"}
+          </button>
         </div>
       </form>
     </div>

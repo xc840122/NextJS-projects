@@ -5,7 +5,6 @@ import { useActionState } from "react";
 import { createProduct } from "@/app/products-db/actions/createProduct";
 
 function AddProductPage() {
-
   const [state, formAction] = useActionState(createProduct, {
     error: {}
   });

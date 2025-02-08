@@ -13,11 +13,13 @@ export type FormState = {
   error: Error,
 }
 
-export const editProduct = async (prevState: FormState, formData: FormData) => {
+export const editProduct = async (
+  id: number,
+  prevState: FormState,
+  formData: FormData) => {
 
   const error: Error = {};
 
-  const id = formData.get("id") as string;
   const name = formData.get("name") as string;
   const price = parseFloat(formData.get("price") as string);
   const description = formData.get("description") as string;
@@ -37,6 +39,6 @@ export const editProduct = async (prevState: FormState, formData: FormData) => {
   if (Object.keys(error).length > 0) {
     return { error };
   }
-  await updateProduct(parseInt(id), name, price, description);
+  await updateProduct(id, name, price, description);
   redirect("/products-db");
 }
