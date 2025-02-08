@@ -13,7 +13,7 @@ const Button = () => {
       type="submit"
       disabled={pending}
     >
-      {pending ? "Adding..." : "Add Product"}
+      {pending ? "Submitting..." : "Submit Product"}
     </button>
   )
 }

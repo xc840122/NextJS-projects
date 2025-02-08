@@ -1,12 +1,18 @@
 'use client'
-import Button from "@/component/Button"
-// import { createProduct } from "./actions/createProduct"
 import { useActionState } from "react";
-import { createProduct } from "@/app/products-db/actions/createProduct";
+import Button from "./Button";
+import { Product } from "@/app/products-db/page";
+import { editProduct } from "@/app/products-db/actions/editProduct";
 
-function AddProductPage() {
 
-  const [state, formAction] = useActionState(createProduct, {
+export default function EditProductForm(
+  {
+    product
+  }: {
+    product: Product
+  }) {
+
+  const [state, formAction] = useActionState(editProduct, {
     error: {}
   });
 
@@ -17,12 +23,14 @@ function AddProductPage() {
         autoComplete="off"
         action={formAction}
         className="border bg-slate-100 w-2/3 space-y-4 p-2 rounded-sm">
+        <input type="hidden" name="id" value={product.id} />
         <div>
           <label>Name</label>
           <input
             className="block border-blue-500 w-full h-10 shadow-sm rounded-lg"
             type="text"
             name="name"
+            defaultValue={product.name}
           />
           {state.error.nameError && (
             <p className="text-red-500">{state.error.nameError}</p>
@@ -34,6 +42,7 @@ function AddProductPage() {
             className="block border-blue-500 w-full h-10 shadow-sm rounded-lg"
             type="text"
             name="price"
+            defaultValue={product.price}
           />
           {state.error.priceError && (
             <p className="text-red-500">{state.error.priceError}</p>
@@ -44,6 +53,7 @@ function AddProductPage() {
           <textarea
             className="block border-blue-500 w-full h-10 shadow-sm rounded-lg"
             name="description"
+            defaultValue={product.description ?? ""}
           />
           {state.error.descriptionError && (
             <p className="text-red-500">{state.error.descriptionError}</p>
@@ -56,5 +66,3 @@ function AddProductPage() {
     </div>
   )
 }
-
-export default AddProductPage

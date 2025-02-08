@@ -52,7 +52,7 @@ export async function updateProduct(
   id: number,
   name: string,
   price: number,
-  description: string
+  description: string | null
 ) {
   return prisma.product.update({
     where: { id },
